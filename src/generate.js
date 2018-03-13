@@ -19,24 +19,9 @@ function generate(width, height, options) {
     if (!noptions.random)
         options.random = Math.random;
 
-    // Default generator.  maze-generator-backtrack isn't included
-    // in this library, it needs to be installed separately.
-    if (!options.generator)
-        options.generator = '@sbj42/maze-generator-backtrack';
-
     var maze = new Maze(width, height);
 
-    var generator;
-    if (typeof(options.generator) == 'string') {
-        try {
-            generator = require(options.generator);
-        } catch (e) {
-            throw new Error('failed to load plugin ' + options.generator + ': ' + e.toString());
-        }
-    } else {
-        generator = options.generator;
-    }
-    generator(maze, options);
+    options.generator(maze, options);
 
     return maze;
 }
